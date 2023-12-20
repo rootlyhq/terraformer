@@ -21,6 +21,7 @@ const excluded = [
   "incident_feedback",
   "incident_form_field_selection",
   "incident_post_mortem",
+  "incident_status_page_event",
   "ip_ranges",
   "pulse",
   "user",
@@ -28,15 +29,14 @@ const excluded = [
   "workflow_runs",
   "workflow_task",
 
-  "incident_role_task",
-  "incident_status_page_event",
-  "playbook_task",
-  "post_mortem_template",
-  "status_page_template",
   "workflow_custom_field_selection",
   "workflow_form_field_condition",
   "workflow",
 ]
+
+const aliased = {
+  "post_mortem_template": "postmortem_template"
+}
 
 async function main() {
   const swagger = await getSwagger()
@@ -55,6 +55,7 @@ function getResources(swagger) {
     .filter((name) => name.match(/_list$/))
     .map((name) => name.replace(/_list$/, ''))
     .filter((name) => !excluded.includes(name))
+    .map((name) => aliased[name] ? name.replace(name, aliased[name]) : name)
 }
 
 function getConnections(swagger, resources) {

@@ -6,7 +6,6 @@ module.exports = (name, childNames = []) => `
 package rootly
 
 import (
-	"fmt"
 	"github.com/GoogleCloudPlatform/terraformer/terraformutils"
 	"github.com/rootlyhq/terraform-provider-rootly/client"
 	rootlygo "github.com/rootlyhq/terraform-provider-rootly/schema"
@@ -61,14 +60,12 @@ func (g* ${inflect.camelize(name)}Generator) InitResources() error {
 
 func (g *${inflect.camelize(name)}Generator) create${inflect.camelize(name)}Resource(provider_resource interface{}) terraformutils.Resource {
 	x, _ := provider_resource.(*client.${inflect.camelize(name)})
-	return terraformutils.NewResource(
+	return terraformutils.NewSimpleResource(
 		x.ID,
-		fmt.Sprintf("%s", x.ID),
+		x.ID,
 		"rootly_${name}",
 		g.ProviderName,
-		map[string]string{},
 		[]string{},
-		map[string]interface{}{},
 	)
 }
 ${childNames.length < 1 ? '' : `
@@ -84,7 +81,7 @@ func (g *${inflect.camelize(name)}Generator) PostConvertHook() error {
             continue
           }
           if ${childName}.InstanceState.Attributes["${name}_id"] == resource.InstanceState.ID {
-            g.Resources[i].Item["${name}_id"] = "\${rootly_${name}." + resource.InstanceState.ID + ".id}"
+            g.Resources[i].Item["${name}_id"] = "\${rootly_${name}.tfer--" + resource.InstanceState.ID + ".id}"
           }
         }
       `
@@ -137,14 +134,12 @@ func (g *${inflect.camelize(parentName)}Generator) create${inflect.camelize(name
 
 func (g *${inflect.camelize(parentName)}Generator) create${inflect.camelize(name)}Resource(provider_resource interface{}) terraformutils.Resource {
 	x, _ := provider_resource.(*client.${inflect.camelize(name)})
-	return terraformutils.NewResource(
+	return terraformutils.NewSimpleResource(
 		x.ID,
-		fmt.Sprintf("%s", x.ID),
+		x.ID,
 		"rootly_${name}",
 		g.ProviderName,
-		map[string]string{},
 		[]string{},
-		map[string]interface{}{},
 	)
 }
 `
