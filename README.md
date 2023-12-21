@@ -1,4 +1,4 @@
-# Terraformer
+# Rootly Terraformer
 
 This is a fork of [Terraformer](https://github.com/GoogleCloudPlatform/terraformer) with added support for the Rootly provider.
 
