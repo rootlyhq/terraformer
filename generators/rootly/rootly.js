@@ -27,16 +27,7 @@ const excluded = [
   "user",
   "webhooks_delivery",
   "workflow_runs",
-  "workflow_task",
-
-  "workflow_custom_field_selection",
-  "workflow_form_field_condition",
-  "workflow",
 ]
-
-const aliased = {
-  "post_mortem_template": "postmortem_template"
-}
 
 async function main() {
   const swagger = await getSwagger()
@@ -45,7 +36,7 @@ async function main() {
   const connections = getConnections(swagger, resources)
   const rootResources = resources.filter((name) => !Object.values(children).flat().includes(name))
   
-  writeProvider(rootResources, connections)
+  writeProvider(swagger, rootResources, connections)
 
   rootResources.forEach((name) => writeResource(name, children[name]))
 }
@@ -55,7 +46,6 @@ function getResources(swagger) {
     .filter((name) => name.match(/_list$/))
     .map((name) => name.replace(/_list$/, ''))
     .filter((name) => !excluded.includes(name))
-    .map((name) => aliased[name] ? name.replace(name, aliased[name]) : name)
 }
 
 function getConnections(swagger, resources) {
@@ -88,9 +78,9 @@ function writeResource(name, childName) {
   fs.writeFileSync(resourcePath, resourceTpl(name, childName))
 }
 
-function writeProvider(resources, connections) {
+function writeProvider(swagger, resources, connections) {
   const providerPath = path.join(__dirname, '..', '..', 'providers', 'rootly', 'rootly_provider.go')
-  fs.writeFileSync(providerPath, providerTpl(resources, connections))
+  fs.writeFileSync(providerPath, providerTpl(swagger, resources, connections))
 }
 
 function parentIdField(swagger, name) {
