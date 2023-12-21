@@ -19,3 +19,7 @@ This is a fork of [Terraformer](https://github.com/GoogleCloudPlatform/terraform
 ## Documentation
 
 Terraformer documentation is available at [github.com/GoogleCloudPlatform/terraformer](https://github.com/GoogleCloudPlatform/terraformer).
+
+## Development
+
+Upgrade the terraform-provider-rootly Go dependency and commit to main branch. A new release will be built automatically using GitHub actions.
