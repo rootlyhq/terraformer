@@ -9,6 +9,8 @@ jobs:
     runs-on: "ubuntu-latest"
 
     steps:
+      - uses: actions/checkout@v4
+
       - name: set env
         run: echo "NOW=$(date +'%Y.%m.%d')" >> $GITHUB_ENV
 
@@ -23,17 +25,20 @@ jobs:
       - name: Generate provider code
         run: node generators/rootly/rootly.js
 
-      - uses: actions/checkout@v4
       - name: Install Go
         uses: actions/setup-go@v4
         with:
           go-version: "1.21"
+
       - name: Build for linux/amd64
         run: go build -o terraformer-rootly-linux-amd64
+
       - name: Build for linux/arm64
         run: GOOS=linux GOARCH=arm64 go build -o terraformer-rootly-linux-arm64
+
       - name: Build for mac
         run: GOOS=darwin go build -o terraformer-rootly-darwin-amd64
+
       - name: Build for mac Apple Silicon
         run: GOOS=darwin GOARCH=arm64 go build -o terraformer-rootly-darwin-arm64
 
