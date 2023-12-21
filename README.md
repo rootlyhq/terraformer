@@ -5,7 +5,7 @@ This is a fork of [Terraformer](https://github.com/GoogleCloudPlatform/terraform
 ## Usage
 
 1. Install the [latest release](https://github.com/rootlyhq/terraformer/releases). Terraform is also required.
-2. Prepare a Terraform working directory with the rootly provider installed.
+2. Prepare a Terraform working directory with the rootly provider installed, and set the ROOTLY_API_TOKEN environment variable.
 3. Run `terraformer-rootly import rootly --resources=* --compact --path-pattern=generated` to import.
 4. Add `source = "rootlyhq/rootly"` to `generated/provider.tf` and change directory to `generated/`.
 5. Run `terraform state replace-provider -- -/rootly rootlyhq/rootly` to fix Terraform 0.13+.
