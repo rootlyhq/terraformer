@@ -100,7 +100,7 @@ func (g *${inflect.camelize(name)}Generator) PostConvertHook() error {
             continue
           }
           if ${childName}.InstanceState.Attributes["${name}_id"] == resource.InstanceState.ID {
-            g.Resources[i].Item["${name}_id"] = "\${" + resource.InstanceInfo.Type + ".tfer--" + resource.InstanceState.ID + ".id}"
+            g.Resources[i].Item["${name}_id"] = "\${" + resource.InstanceInfo.Type + "." + resource.ResourceName + ".id}"
           }
         }
       `
