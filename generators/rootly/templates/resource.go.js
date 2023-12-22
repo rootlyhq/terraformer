@@ -1,6 +1,6 @@
 const inflect = require('inflect')
 
-module.exports = (name, childNames = []) => {
+module.exports = (swagger, name, childNames = []) => {
 	let clientName = name
 	if (name === "post_mortem_template") {
 		clientName = "postmortem_template"
@@ -68,7 +68,7 @@ func (g *${inflect.camelize(name)}Generator) create${inflect.camelize(name)}Reso
 	x, _ := provider_resource.(*client.${inflect.camelize(clientName)})
 	return terraformutils.NewSimpleResource(
 		x.ID,
-		x.ID,
+		x.${hclResourceName(swagger, name)},
 		${resourceType("x", name)},
 		g.ProviderName,
 		[]string{},
@@ -110,7 +110,7 @@ func (g *${inflect.camelize(name)}Generator) PostConvertHook() error {
   return nil
 }`}
 
-${childNames.map((childName) => childResourceTpl(name, childName)).join('\n')}
+${childNames.map((childName) => childResourceTpl(swagger, name, childName)).join('\n')}
 `}
 
 const resourceType = (resource, name) => {
@@ -124,7 +124,8 @@ const resourceType = (resource, name) => {
 	}
 }
 
-const childResourceTpl = (parentName, name) => `
+const childResourceTpl = (swagger, parentName, name) => {
+	return `
 func (g *${inflect.camelize(parentName)}Generator) create${inflect.camelize(name)}Resources(parent_id string) ([]terraformutils.Resource, error) {
 	page_size := 50
 	page_num := 1
@@ -166,10 +167,19 @@ func (g *${inflect.camelize(parentName)}Generator) create${inflect.camelize(name
 	x, _ := provider_resource.(*client.${inflect.camelize(name)})
 	return terraformutils.NewSimpleResource(
 		x.ID,
-		x.ID,
+		x.${hclResourceName(swagger, name)},
 		${resourceType("x", name)},
 		g.ProviderName,
 		[]string{},
 	)
 }
-`
+`}
+
+const hclResourceName = (swagger, schemaName) => {
+	const schema = swagger.components.schemas[schemaName]
+	const slug = schema?.properties?.slug
+	const name = schema?.properties?.name
+	if (slug) return "Slug"
+	if (name) return "Name"
+	return "ID"
+}

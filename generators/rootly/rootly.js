@@ -38,7 +38,7 @@ async function main() {
   
   writeProvider(swagger, rootResources, connections)
 
-  rootResources.forEach((name) => writeResource(name, children[name]))
+  rootResources.forEach((name) => writeResource(swagger, name, children[name]))
 }
 
 function getResources(swagger) {
@@ -73,9 +73,9 @@ function getSwagger() {
   return fetch(swaggerUrl).then((res) => res.json())
 }
 
-function writeResource(name, childName) {
+function writeResource(swagger, name, childName) {
   const resourcePath = path.join(__dirname, '..', '..', 'providers', 'rootly', `${name}.go`)
-  fs.writeFileSync(resourcePath, resourceTpl(name, childName))
+  fs.writeFileSync(resourcePath, resourceTpl(swagger, name, childName))
 }
 
 function writeProvider(swagger, resources, connections) {
