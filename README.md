@@ -10,27 +10,18 @@ This is a fork of [Terraformer](https://github.com/GoogleCloudPlatform/terraform
 
 Terraform 0.13+ is required.
 
-#### Linux
-
-```
-curl -LO "https://github.com/rootlyhq/terraformer/releases/download/$(curl -s https://api.github.com/repos/rootlyhq/terraformer/releases/latest | grep tag_name | cut -d '"' -f 4)/terraformer-rootly-linux-amd64"
-chmod +x terraformer-rootly-linux-amd64
-sudo mv terraformer-rootly-linux-amd64 /usr/local/bin/terraformer
-```
-
-#### MacOS
-
-```
-curl -LO "https://github.com/rootlyhq/terraformer/releases/download/$(curl -s https://api.github.com/repos/rootlyhq/terraformer/releases/latest | grep tag_name | cut -d '"' -f 4)/terraformer-rootly-darwin-amd64"
-chmod +x terraformer-rootly-darwin-amd64
-sudo mv terraformer-rootly-darwin-amd64 /usr/local/bin/terraformer-rootly
+```sh
+export ARCH=darwin-arm64 # Mac Apple silicon. For Mac Intel silicon use darwin-amd64. For Linux use linux-amd64.
+curl -LO "https://github.com/rootlyhq/terraformer/releases/download/$(curl -s https://api.github.com/repos/rootlyhq/terraformer/releases/latest | grep tag_name | cut -d '"' -f 4)/terraformer-rootly-${ARCH}"
+chmod +x terraformer-rootly-${ARCH}
+sudo mv terraformer-rootly-${ARCH} /usr/local/bin/terraformer-rootly
 ```
 
 ### 2. Prepare working directory
 
 Prepare a working directory containing `versions.tf`:
 
-```
+```tf
 terraform {
   required_providers {
     rootly = {
@@ -46,13 +37,13 @@ Set the `ROOTLY_API_TOKEN` environment variable.
 
 Import all resources:
 
-```
+```sh
 terraformer-rootly import rootly --resources=*
 ```
 
 Or import specific resources:
 
-```
+```sh
 terraformer-rootly import rootly --resources=environment,severity
 ```
 
@@ -64,7 +55,7 @@ Generated `provider.tf` files need `source = "rootlyhq/rootly"`.
 
 Generated `.tfstate` files need to be updated to use a qualified name:
 
-```
+```sh
 terraform state replace-provider -- -/rootly rootlyhq/rootly
 ```
 
