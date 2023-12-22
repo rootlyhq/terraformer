@@ -178,8 +178,6 @@ func (g *${inflect.camelize(parentName)}Generator) create${inflect.camelize(name
 const hclResourceName = (swagger, schemaName) => {
 	const schema = swagger.components.schemas[schemaName]
 	const slug = schema?.properties?.slug
-	const name = schema?.properties?.name
 	if (slug) return "Slug"
-	if (name) return "Name"
 	return "ID"
 }
