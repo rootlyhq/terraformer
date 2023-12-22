@@ -1,8 +1,8 @@
 name: "release"
 on:
   push:
-    branches:
-      - master
+    tags:
+      - "*"
 jobs:
   release:
     name: "Release"
@@ -45,7 +45,6 @@ jobs:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: ${{ env.NOW }}
           prerelease: false
           files: |
             terraformer-*
