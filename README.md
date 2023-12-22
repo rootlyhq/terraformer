@@ -75,4 +75,4 @@ Terraformer documentation is available at [github.com/GoogleCloudPlatform/terraf
 
 ### Upgrade Rootly API support
 
-Run `make upgrade` or `go get -u github.com/rootlyhq/terraform-provider-rootly` and commit changes. Tag to release.
+Run `make release` and push the generated commit/tag to GitHub.
