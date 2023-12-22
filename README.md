@@ -19,7 +19,9 @@ sudo mv terraformer-rootly-${ARCH} /usr/local/bin/terraformer-rootly
 
 ### 2. Prepare working directory
 
-Prepare a working directory containing `versions.tf`:
+Prepare a Terraform working directory with the Rootly provider installed.
+
+If starting from scratch create a `versions.tf` file:
 
 ```tf
 terraform {
@@ -31,9 +33,11 @@ terraform {
 }
 ```
 
-Set the `ROOTLY_API_TOKEN` environment variable.
+and run `terraform init` to initialize Terraform.
 
 ### 3. Import Terraform configuration
+
+Set the `ROOTLY_API_TOKEN` environment variable or use `--token=` CLI flag when running `terraformer-rootly`.
 
 Import all resources:
 
