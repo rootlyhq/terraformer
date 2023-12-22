@@ -23,9 +23,6 @@ func (p *RootlyProvider) Init(args []string) error {
 	if args[0] != "" {
 		p.apiUrl = args[0]
 	}
-	if p.apiUrl == "" {
-		return errors.New("required API URL missing")
-	}
 
 	if apiKey := os.Getenv("ROOTLY_API_TOKEN"); apiKey != "" {
 		p.apiKey = os.Getenv("ROOTLY_API_TOKEN")
