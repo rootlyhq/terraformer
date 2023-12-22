@@ -11,20 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: set env
-        run: echo "NOW=$(date +'%Y.%m.%d')" >> $GITHUB_ENV
-
-      - name: Set Node.js 21.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 21.x
-
-      - name: Install Node.js dependencies
-        run: yarn install
-
-      - name: Generate provider code
-        run: node generators/rootly/rootly.js
-
       - name: Install Go
         uses: actions/setup-go@v4
         with:
