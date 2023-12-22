@@ -55,7 +55,7 @@ func (g *SecretGenerator) createSecretResource(provider_resource interface{}) te
 	x, _ := provider_resource.(*client.Secret)
 	return terraformutils.NewSimpleResource(
 		x.ID,
-		x.Name,
+		x.ID,
 		"rootly_secret",
 		g.ProviderName,
 		[]string{},

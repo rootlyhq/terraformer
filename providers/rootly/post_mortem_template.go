@@ -55,7 +55,7 @@ func (g *PostMortemTemplateGenerator) createPostMortemTemplateResource(provider_
 	x, _ := provider_resource.(*client.PostmortemTemplate)
 	return terraformutils.NewSimpleResource(
 		x.ID,
-		x.Name,
+		x.ID,
 		"rootly_post_mortem_template",
 		g.ProviderName,
 		[]string{},

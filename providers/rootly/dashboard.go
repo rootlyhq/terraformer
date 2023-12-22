@@ -55,7 +55,7 @@ func (g *DashboardGenerator) createDashboardResource(provider_resource interface
 	x, _ := provider_resource.(*client.Dashboard)
 	return terraformutils.NewSimpleResource(
 		x.ID,
-		x.Name,
+		x.ID,
 		"rootly_dashboard",
 		g.ProviderName,
 		[]string{},

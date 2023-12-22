@@ -259,7 +259,7 @@ func (g *WorkflowGenerator) createWorkflowTaskResource(provider_resource interfa
 	x, _ := provider_resource.(*client.WorkflowTask)
 	return terraformutils.NewSimpleResource(
 		x.ID,
-		x.Name,
+		x.ID,
 		"rootly_workflow_task_" + x.TaskParams["task_type"].(string),
 		g.ProviderName,
 		[]string{},
