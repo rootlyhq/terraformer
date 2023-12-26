@@ -1,0 +1,32 @@
+name: "test"
+on:
+  pull_request:
+    branches:
+      - "master"
+jobs:
+  release:
+    name: "Test"
+    runs-on: "ubuntu-latest"
+    env:
+      ROOTLY_API_TOKEN: ${{ secrets.ROOTLY_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.21"
+
+      - name: Build for linux/amd64
+        run: go build -o terraformer-rootly-test tests/rootly/main.go
+
+      - uses: hashicorp/setup-terraform@v2
+
+      - name: Prepare Terraform
+        run: |
+          cp tests/rootly/versions.tf versions.tf
+          terraform init
+
+      - name: Import
+        run: ./terraformer-rootly-test
