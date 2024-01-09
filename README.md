@@ -2,20 +2,23 @@
 
 This is a fork of [Terraformer](https://github.com/GoogleCloudPlatform/terraformer) with added support for the Rootly provider.
 
-[![asciicast](https://asciinema.org/a/Gv8LCrdpGX0mqISHReAQfJV7N.svg)](https://asciinema.org/a/Gv8LCrdpGX0mqISHReAQfJV7N)
-
 ## Usage
 
 ### 1. Installation
 
+#### Homebrew
+
+    brew tap rootlyhq/homebrew-tap git@github.com:rootlyhq/homebrew-tap.git
+    brew install terraformer-rootly
+
+#### Download
+
 Terraform 0.13+ is required.
 
-```sh
-export ARCH=darwin-arm64 # Mac Apple silicon. For Mac Intel silicon use darwin-amd64. For Linux use linux-amd64.
-curl -LO "https://github.com/rootlyhq/terraformer/releases/download/$(curl -s https://api.github.com/repos/rootlyhq/terraformer/releases/latest | grep tag_name | cut -d '"' -f 4)/terraformer-rootly-${ARCH}"
-chmod +x terraformer-rootly-${ARCH}
-sudo mv terraformer-rootly-${ARCH} /usr/local/bin/terraformer-rootly
-```
+    export ARCH=darwin-arm64 # Mac Apple silicon. For Mac Intel silicon use darwin-amd64. For Linux use linux-amd64.
+    curl -LO "https://github.com/rootlyhq/terraformer/releases/download/$(curl -s https://api.github.com/repos/rootlyhq/terraformer/releases/latest | grep tag_name | cut -d '"' -f 4)/terraformer-rootly-${ARCH}"
+    chmod +x terraformer-rootly-${ARCH}
+    sudo mv terraformer-rootly-${ARCH} /usr/local/bin/terraformer-rootly
 
 ### 2. Prepare working directory
 
