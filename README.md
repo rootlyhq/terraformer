@@ -52,7 +52,7 @@ Or import specific resources:
 
     terraformer-rootly import rootly --resources=environment,severity
 
-See all the command line options using `terraformer-rootly --help`
+See all available resources using `terraformer-rootly import rootly list`
 
 ### Next steps
 
