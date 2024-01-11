@@ -2,7 +2,7 @@
 
 This is a fork of [Terraformer](https://github.com/GoogleCloudPlatform/terraformer) with added support for the Rootly provider.
 
-![demo](https://github.com/rootlyhq/terraformer/assets/1112718/327d9a9b-5674-4fcb-9dbf-6323664ca0b7)
+[![asciicast](https://asciinema.org/a/630898.svg)](https://asciinema.org/a/630898)
 
 ## Usage
 
