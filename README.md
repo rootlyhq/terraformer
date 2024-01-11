@@ -1,6 +1,6 @@
 # Rootly Terraformer
 
-This is a fork of [Terraformer](https://github.com/GoogleCloudPlatform/terraformer) with added support for the Rootly provider.
+Generate Terraform configuration from Rootly's API. Terraform in reverse.
 
 [![asciicast](https://asciinema.org/a/630898.svg)](https://asciinema.org/a/630898)
 
