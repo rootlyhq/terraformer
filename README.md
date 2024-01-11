@@ -6,11 +6,11 @@ This is a fork of [Terraformer](https://github.com/GoogleCloudPlatform/terraform
 
 ## Usage
 
-### 1. Installation
+### 1. Install
 
 #### Homebrew
 
-    brew tap rootlyhq/homebrew-tap git@github.com:rootlyhq/homebrew-tap.git
+    brew tap rootlyhq/homebrew-tap
     brew install terraformer-rootly
 
 #### Download
@@ -46,35 +46,21 @@ Set the `ROOTLY_API_TOKEN` environment variable or use `--token=` CLI flag when 
 
 Import all resources:
 
-```sh
-terraformer-rootly import rootly --resources=*
-```
+    terraformer-rootly import rootly --resources=*
 
 Or import specific resources:
 
-```sh
-terraformer-rootly import rootly --resources=environment,severity
-```
+    terraformer-rootly import rootly --resources=environment,severity
 
 See all the command line options using `terraformer-rootly --help`
 
-### 4. Set qualified name for Rootly provider
+### Next steps
 
 Generated `provider.tf` files need `source = "rootlyhq/rootly"`.
 
 Generated `.tfstate` files need to be updated to use a qualified name:
 
-```sh
-terraform state replace-provider -- -/rootly rootlyhq/rootly
-```
-
-### 5. Verify
-
-Use `terraform plan` to verify imported configuration matches your Rootly configuration.
-
-## Documentation
-
-Terraformer documentation is available at [github.com/GoogleCloudPlatform/terraformer](https://github.com/GoogleCloudPlatform/terraformer).
+    terraform state replace-provider -- -/rootly rootlyhq/rootly
 
 ## Development
 
