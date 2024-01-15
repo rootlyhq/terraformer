@@ -18,9 +18,6 @@ func (p *RootlyProvider) Init(args []string) error {
 	if apiUrl := os.Getenv("ROOTLY_API_URL"); apiUrl != "" {
 		p.apiUrl = os.Getenv("ROOTLY_API_URL")
 	}
-	if args[0] != "" {
-		p.apiUrl = args[0]
-	}
 	if p.apiUrl == "" {
 		p.apiUrl = "https://api.rootly.com"
 	}
