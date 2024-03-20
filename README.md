@@ -56,11 +56,9 @@ See all available resources using `terraformer-rootly import rootly list`
 
 ### Next steps
 
-Generated `provider.tf` files need `source = "rootlyhq/rootly"`.
+Generated `.tfstate` files need to be upgraded to Terraform 0.13+ format:
 
-Generated `.tfstate` files need to be updated to use a qualified name:
-
-    terraform state replace-provider -- -/rootly rootlyhq/rootly
+    terraform state replace-provider -auto-approve -- -/rootly rootlyhq/rootly
 
 ## Development
 
