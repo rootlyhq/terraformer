@@ -275,8 +275,12 @@ func escapeRune(s string) string {
 }
 
 // Sanitize name for terraform style
+// Prefix with tfer-- if starts with digit
 func TfSanitize(name string) string {
 	name = unsafeChars.ReplaceAllStringFunc(name, escapeRune)
+	if (len(name) > 0 && name[0] >= '0' && name[0] <= '9') {
+		name = "tfer--" + name
+	}
 	return name
 }
 
