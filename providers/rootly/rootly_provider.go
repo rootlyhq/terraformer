@@ -56,6 +56,10 @@ func (p *RootlyProvider) GetName() string {
 	return "rootly"
 }
 
+func (p *RootlyProvider) GetSource() string {
+	return "rootlyhq/rootly"
+}
+
 func (p *RootlyProvider) GetConfig() cty.Value {
 	return cty.ObjectVal(map[string]cty.Value{
 		"api_token": cty.StringVal(p.apiKey),
