@@ -18,6 +18,9 @@ func (p *RootlyProvider) Init(args []string) error {
 	if apiUrl := os.Getenv("ROOTLY_API_URL"); apiUrl != "" {
 		p.apiUrl = os.Getenv("ROOTLY_API_URL")
 	}
+	if args[0] != "" {
+		p.apiUrl = args[0]
+	}
 	if p.apiUrl == "" {
 		p.apiUrl = "https://api.rootly.com"
 	}
@@ -73,45 +76,7 @@ func (p RootlyProvider) GetProviderData(arg ...string) map[string]interface{} {
 
 func (p *RootlyProvider) GetResourceConnections() map[string]map[string][]string {
 	return map[string]map[string][]string{
-		"rootly_playbook_task": {
-					
-							"rootly_playbook": {
-								"playbook_id", "id",
-							},
-				},
-    "rootly_incident_role_task": {
-					
-							"rootly_incident_role": {
-								"incident_role_id", "id",
-							},
-				},
-    "rootly_workflow_custom_field_selection": {
-					
-							"rootly_workflow_incident": {
-								"workflow_id", "id",
-							},
-
-							"rootly_workflow_action_item": {
-								"workflow_id", "id",
-							},
-
-							"rootly_workflow_post_mortem": {
-								"workflow_id", "id",
-							},
-
-							"rootly_workflow_pulse": {
-								"workflow_id", "id",
-							},
-
-							"rootly_workflow_alert": {
-								"workflow_id", "id",
-							},
-
-							"rootly_workflow_simple": {
-								"workflow_id", "id",
-							},
-				},
-    "rootly_form_field_option": {
+		"rootly_form_field_option": {
 					
 							"rootly_form_field": {
 								"form_field_id", "id",
@@ -121,32 +86,6 @@ func (p *RootlyProvider) GetResourceConnections() map[string]map[string][]string
 					
 							"rootly_form_field": {
 								"form_field_id", "id",
-							},
-				},
-    "rootly_workflow_form_field_condition": {
-					
-							"rootly_workflow_incident": {
-								"workflow_id", "id",
-							},
-
-							"rootly_workflow_action_item": {
-								"workflow_id", "id",
-							},
-
-							"rootly_workflow_post_mortem": {
-								"workflow_id", "id",
-							},
-
-							"rootly_workflow_pulse": {
-								"workflow_id", "id",
-							},
-
-							"rootly_workflow_alert": {
-								"workflow_id", "id",
-							},
-
-							"rootly_workflow_simple": {
-								"workflow_id", "id",
 							},
 				},
     "rootly_workflow_task_add_action_item": {
@@ -358,6 +297,32 @@ func (p *RootlyProvider) GetResourceConnections() map[string]map[string][]string
 							},
 				},
 "rootly_workflow_task_auto_assign_role_opsgenie": {
+					
+							"rootly_workflow_incident": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_action_item": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_post_mortem": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_pulse": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_alert": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_simple": {
+								"workflow_id", "id",
+							},
+				},
+"rootly_workflow_task_auto_assign_role_rootly": {
 					
 							"rootly_workflow_incident": {
 								"workflow_id", "id",
@@ -696,6 +661,32 @@ func (p *RootlyProvider) GetResourceConnections() map[string]map[string][]string
 							},
 				},
 "rootly_workflow_task_create_github_issue": {
+					
+							"rootly_workflow_incident": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_action_item": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_post_mortem": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_pulse": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_alert": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_simple": {
+								"workflow_id", "id",
+							},
+				},
+"rootly_workflow_task_create_gitlab_issue": {
 					
 							"rootly_workflow_incident": {
 								"workflow_id", "id",
@@ -1579,6 +1570,32 @@ func (p *RootlyProvider) GetResourceConnections() map[string]map[string][]string
 								"workflow_id", "id",
 							},
 				},
+"rootly_workflow_task_invite_to_slack_channel_rootly": {
+					
+							"rootly_workflow_incident": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_action_item": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_post_mortem": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_pulse": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_alert": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_simple": {
+								"workflow_id", "id",
+							},
+				},
 "rootly_workflow_task_invite_to_slack_channel_pagerduty": {
 					
 							"rootly_workflow_incident": {
@@ -1761,6 +1778,32 @@ func (p *RootlyProvider) GetResourceConnections() map[string]map[string][]string
 								"workflow_id", "id",
 							},
 				},
+"rootly_workflow_task_page_rootly_on_call_responders": {
+					
+							"rootly_workflow_incident": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_action_item": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_post_mortem": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_pulse": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_alert": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_simple": {
+								"workflow_id", "id",
+							},
+				},
 "rootly_workflow_task_page_pagerduty_on_call_responders": {
 					
 							"rootly_workflow_incident": {
@@ -1918,6 +1961,32 @@ func (p *RootlyProvider) GetResourceConnections() map[string]map[string][]string
 							},
 				},
 "rootly_workflow_task_rename_slack_channel": {
+					
+							"rootly_workflow_incident": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_action_item": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_post_mortem": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_pulse": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_alert": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_simple": {
+								"workflow_id", "id",
+							},
+				},
+"rootly_workflow_task_change_slack_channel_privacy": {
 					
 							"rootly_workflow_incident": {
 								"workflow_id", "id",
@@ -2333,6 +2402,32 @@ func (p *RootlyProvider) GetResourceConnections() map[string]map[string][]string
 								"workflow_id", "id",
 							},
 				},
+"rootly_workflow_task_update_gitlab_issue": {
+					
+							"rootly_workflow_incident": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_action_item": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_post_mortem": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_pulse": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_alert": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_simple": {
+								"workflow_id", "id",
+							},
+				},
 "rootly_workflow_task_update_incident": {
 					
 							"rootly_workflow_incident": {
@@ -2697,10 +2792,72 @@ func (p *RootlyProvider) GetResourceConnections() map[string]map[string][]string
 								"workflow_id", "id",
 							},
 				},
+    "rootly_workflow_form_field_condition": {
+					
+							"rootly_workflow_incident": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_action_item": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_post_mortem": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_pulse": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_alert": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_simple": {
+								"workflow_id", "id",
+							},
+				},
+    "rootly_incident_permission_set_boolean": {
+					
+							"rootly_incident_permission_set": {
+								"incident_permission_set_id", "id",
+							},
+				},
+    "rootly_incident_permission_set_resource": {
+					
+							"rootly_incident_permission_set": {
+								"incident_permission_set_id", "id",
+							},
+				},
+    "rootly_incident_role_task": {
+					
+							"rootly_incident_role": {
+								"incident_role_id", "id",
+							},
+				},
+    "rootly_playbook_task": {
+					
+							"rootly_playbook": {
+								"playbook_id", "id",
+							},
+				},
+    "rootly_retrospective_step": {
+					
+							"rootly_retrospective_process": {
+								"retrospective_process_id", "id",
+							},
+				},
     "rootly_status_page_template": {
 					
 							"rootly_status_page": {
 								"status_page_id", "id",
+							},
+				},
+    "rootly_user_notification_rule": {
+					
+							"rootly_user": {
+								"user_id", "id",
 							},
 				},
 	}
@@ -2708,23 +2865,28 @@ func (p *RootlyProvider) GetResourceConnections() map[string]map[string][]string
 
 func (p *RootlyProvider) GetSupportedService() map[string]terraformutils.ServiceGenerator {
 	return map[string]terraformutils.ServiceGenerator{
-		"environment": &EnvironmentGenerator{},
-		"functionality": &FunctionalityGenerator{},
-		"service": &ServiceGenerator{},
-		"playbook": &PlaybookGenerator{},
+		"authorization": &AuthorizationGenerator{},
 		"cause": &CauseGenerator{},
+		"custom_form": &CustomFormGenerator{},
+		"dashboard": &DashboardGenerator{},
+		"environment": &EnvironmentGenerator{},
+		"form_field": &FormFieldGenerator{},
+		"functionality": &FunctionalityGenerator{},
+		"workflow_group": &WorkflowGroupGenerator{},
+		"workflow": &WorkflowGenerator{},
+		"incident_permission_set": &IncidentPermissionSetGenerator{},
+		"incident_role": &IncidentRoleGenerator{},
+		"incident_type": &IncidentTypeGenerator{},
+		"playbook": &PlaybookGenerator{},
+		"post_mortem_template": &PostMortemTemplateGenerator{},
+		"retrospective_configuration": &RetrospectiveConfigurationGenerator{},
+		"retrospective_process": &RetrospectiveProcessGenerator{},
+		"role": &RoleGenerator{},
+		"secret": &SecretGenerator{},
+		"service": &ServiceGenerator{},
 		"severity": &SeverityGenerator{},
 		"status_page": &StatusPageGenerator{},
-		"incident_role": &IncidentRoleGenerator{},
-		"post_mortem_template": &PostMortemTemplateGenerator{},
-		"retrospective_step": &RetrospectiveStepGenerator{},
 		"team": &TeamGenerator{},
-		"incident_type": &IncidentTypeGenerator{},
-		"workflow": &WorkflowGenerator{},
-		"form_field": &FormFieldGenerator{},
-		"workflow_group": &WorkflowGroupGenerator{},
-		"dashboard": &DashboardGenerator{},
 		"webhooks_endpoint": &WebhooksEndpointGenerator{},
-		"secret": &SecretGenerator{},
 	}
 }

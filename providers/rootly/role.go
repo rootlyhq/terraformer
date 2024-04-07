@@ -10,11 +10,11 @@ import (
 	rootlygo "github.com/rootlyhq/terraform-provider-rootly/schema"
 )
 
-type RetrospectiveStepGenerator struct {
+type RoleGenerator struct {
 	RootlyService
 }
 
-func (g* RetrospectiveStepGenerator) InitResources() error {
+func (g* RoleGenerator) InitResources() error {
 	page_size := 50
 	page_num := 1
 
@@ -25,10 +25,10 @@ func (g* RetrospectiveStepGenerator) InitResources() error {
 
 	for {
 		resources, err := func(page_size, page_num int) ([]interface{}, error) {
-			params := new(rootlygo.ListRetrospectiveStepsParams)
+			params := new(rootlygo.ListRolesParams)
 			params.PageSize = &page_size
 			params.PageNumber = &page_num
-			return client.ListRetrospectiveSteps(params)
+			return client.ListRoles(params)
 		}(page_size, page_num)
 
 		if err != nil {
@@ -40,7 +40,7 @@ func (g* RetrospectiveStepGenerator) InitResources() error {
 		}
 
   	for _, resource := range resources {
-      tf_resource := g.createRetrospectiveStepResource(resource)
+      tf_resource := g.createRoleResource(resource)
       g.Resources = append(g.Resources, tf_resource)
       
   	}
@@ -51,12 +51,12 @@ func (g* RetrospectiveStepGenerator) InitResources() error {
 	return nil
 }
 
-func (g *RetrospectiveStepGenerator) createRetrospectiveStepResource(provider_resource interface{}) terraformutils.Resource {
-	x, _ := provider_resource.(*client.RetrospectiveStep)
+func (g *RoleGenerator) createRoleResource(provider_resource interface{}) terraformutils.Resource {
+	x, _ := provider_resource.(*client.Role)
 	return terraformutils.NewSimpleResource(
 		x.ID,
 		x.Slug,
-		"rootly_retrospective_step",
+		"rootly_role",
 		g.ProviderName,
 		[]string{},
 	)

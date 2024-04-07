@@ -12,6 +12,8 @@ const excluded = [
   "custom_field_option",
   "dashboard_panel",
   "errors",
+  "escalation_policy",
+  "escalation_policy_level",
   "incident",
   "incident_action_item",
   "incident_custom_field_selection",
@@ -27,6 +29,7 @@ const excluded = [
   "user",
   "webhooks_delivery",
   "workflow_runs",
+  "workflow_custom_field_selection",
 ]
 
 async function main() {

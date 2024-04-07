@@ -42,21 +42,16 @@ func (g* WorkflowGenerator) InitResources() error {
   	for _, resource := range resources {
       tf_resource := g.createWorkflowResource(resource)
       g.Resources = append(g.Resources, tf_resource)
-      child_workflow_custom_field_selection, err := g.createWorkflowCustomFieldSelectionResources(tf_resource.InstanceState.ID)
+      child_workflow_task, err := g.createWorkflowTaskResources(tf_resource.InstanceState.ID)
       if err != nil {
         return err
       }
-      g.Resources = append(g.Resources, child_workflow_custom_field_selection...)
+      g.Resources = append(g.Resources, child_workflow_task...)
 child_workflow_form_field_condition, err := g.createWorkflowFormFieldConditionResources(tf_resource.InstanceState.ID)
       if err != nil {
         return err
       }
       g.Resources = append(g.Resources, child_workflow_form_field_condition...)
-child_workflow_task, err := g.createWorkflowTaskResources(tf_resource.InstanceState.ID)
-      if err != nil {
-        return err
-      }
-      g.Resources = append(g.Resources, child_workflow_task...)
   	}
 
 		page_num += 1
@@ -85,11 +80,11 @@ func (g *WorkflowGenerator) PostConvertHook() error {
     }
 		
     
-        for i, workflow_custom_field_selection := range g.Resources {
-          if workflow_custom_field_selection.InstanceInfo.Type != "rootly_workflow_custom_field_selection" {
+        for i, workflow_task := range g.Resources {
+          if !regexp.MustCompile(`workflow_task`).MatchString(workflow_task.InstanceInfo.Type) {
             continue
           }
-          if workflow_custom_field_selection.InstanceState.Attributes["workflow_id"] == resource.InstanceState.ID {
+          if workflow_task.InstanceState.Attributes["workflow_id"] == resource.InstanceState.ID {
             g.Resources[i].Item["workflow_id"] = "${" + resource.InstanceInfo.Type + "." + resource.ResourceName + ".id}"
           }
         }
@@ -104,23 +99,13 @@ func (g *WorkflowGenerator) PostConvertHook() error {
           }
         }
       
-
-        for i, workflow_task := range g.Resources {
-          if !regexp.MustCompile(`workflow_task`).MatchString(workflow_task.InstanceInfo.Type) {
-            continue
-          }
-          if workflow_task.InstanceState.Attributes["workflow_id"] == resource.InstanceState.ID {
-            g.Resources[i].Item["workflow_id"] = "${" + resource.InstanceInfo.Type + "." + resource.ResourceName + ".id}"
-          }
-        }
-      
   }
 
   return nil
 }
 
 
-func (g *WorkflowGenerator) createWorkflowCustomFieldSelectionResources(parent_id string) ([]terraformutils.Resource, error) {
+func (g *WorkflowGenerator) createWorkflowTaskResources(parent_id string) ([]terraformutils.Resource, error) {
 	page_size := 50
 	page_num := 1
 
@@ -133,10 +118,10 @@ func (g *WorkflowGenerator) createWorkflowCustomFieldSelectionResources(parent_i
 
 	for {
 		resources, err := func(page_size, page_num int) ([]interface{}, error) {
-			params := new(rootlygo.ListWorkflowCustomFieldSelectionsParams)
+			params := new(rootlygo.ListWorkflowTasksParams)
 			params.PageSize = &page_size
 			params.PageNumber = &page_num
-			return client.ListWorkflowCustomFieldSelections(parent_id, params)
+			return client.ListWorkflowTasks(parent_id, params)
 		}(page_size, page_num)
 
 		if err != nil {
@@ -148,7 +133,7 @@ func (g *WorkflowGenerator) createWorkflowCustomFieldSelectionResources(parent_i
 		}
 
   	for _, resource := range resources {
-      tf_resources = append(tf_resources, g.createWorkflowCustomFieldSelectionResource(resource))
+      tf_resources = append(tf_resources, g.createWorkflowTaskResource(resource))
   	}
 
 		page_num += 1
@@ -157,12 +142,12 @@ func (g *WorkflowGenerator) createWorkflowCustomFieldSelectionResources(parent_i
 	return tf_resources, nil
 }
 
-func (g *WorkflowGenerator) createWorkflowCustomFieldSelectionResource(provider_resource interface{}) terraformutils.Resource {
-	x, _ := provider_resource.(*client.WorkflowCustomFieldSelection)
+func (g *WorkflowGenerator) createWorkflowTaskResource(provider_resource interface{}) terraformutils.Resource {
+	x, _ := provider_resource.(*client.WorkflowTask)
 	return terraformutils.NewSimpleResource(
 		x.ID,
 		x.ID,
-		"rootly_workflow_custom_field_selection",
+		"rootly_workflow_task_" + x.TaskParams["task_type"].(string),
 		g.ProviderName,
 		[]string{},
 	)
@@ -212,55 +197,6 @@ func (g *WorkflowGenerator) createWorkflowFormFieldConditionResource(provider_re
 		x.ID,
 		x.ID,
 		"rootly_workflow_form_field_condition",
-		g.ProviderName,
-		[]string{},
-	)
-}
-
-
-func (g *WorkflowGenerator) createWorkflowTaskResources(parent_id string) ([]terraformutils.Resource, error) {
-	page_size := 50
-	page_num := 1
-
-	client, err := g.RootlyClient()
-	if err != nil {
-		return nil, err
-	}
-
-  var tf_resources []terraformutils.Resource
-
-	for {
-		resources, err := func(page_size, page_num int) ([]interface{}, error) {
-			params := new(rootlygo.ListWorkflowTasksParams)
-			params.PageSize = &page_size
-			params.PageNumber = &page_num
-			return client.ListWorkflowTasks(parent_id, params)
-		}(page_size, page_num)
-
-		if err != nil {
-			return nil, err
-		}
-
-		if len(resources) == 0 {
-			break
-		}
-
-  	for _, resource := range resources {
-      tf_resources = append(tf_resources, g.createWorkflowTaskResource(resource))
-  	}
-
-		page_num += 1
-	}
-
-	return tf_resources, nil
-}
-
-func (g *WorkflowGenerator) createWorkflowTaskResource(provider_resource interface{}) terraformutils.Resource {
-	x, _ := provider_resource.(*client.WorkflowTask)
-	return terraformutils.NewSimpleResource(
-		x.ID,
-		x.ID,
-		"rootly_workflow_task_" + x.TaskParams["task_type"].(string),
 		g.ProviderName,
 		[]string{},
 	)
