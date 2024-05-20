@@ -6,8 +6,8 @@ package rootly
 import (
 	
 	"github.com/GoogleCloudPlatform/terraformer/terraformutils"
-	"github.com/rootlyhq/terraform-provider-rootly/client"
-	rootlygo "github.com/rootlyhq/terraform-provider-rootly/schema"
+	"github.com/rootlyhq/terraform-provider-rootly/v2/client"
+	rootlygo "github.com/rootlyhq/terraform-provider-rootly/v2/schema"
 )
 
 type SeverityGenerator struct {

@@ -400,6 +400,32 @@ func (p *RootlyProvider) GetResourceConnections() map[string]map[string][]string
 								"workflow_id", "id",
 							},
 				},
+"rootly_workflow_task_create_pagerduty_status_update": {
+					
+							"rootly_workflow_incident": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_action_item": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_post_mortem": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_pulse": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_alert": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_simple": {
+								"workflow_id", "id",
+							},
+				},
 "rootly_workflow_task_create_pagertree_alert": {
 					
 							"rootly_workflow_incident": {
@@ -712,6 +738,32 @@ func (p *RootlyProvider) GetResourceConnections() map[string]map[string][]string
 								"workflow_id", "id",
 							},
 				},
+"rootly_workflow_task_create_outlook_event": {
+					
+							"rootly_workflow_incident": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_action_item": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_post_mortem": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_pulse": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_alert": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_simple": {
+								"workflow_id", "id",
+							},
+				},
 "rootly_workflow_task_create_google_calendar_event": {
 					
 							"rootly_workflow_incident": {
@@ -765,6 +817,32 @@ func (p *RootlyProvider) GetResourceConnections() map[string]map[string][]string
 							},
 				},
 "rootly_workflow_task_update_google_calendar_event": {
+					
+							"rootly_workflow_incident": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_action_item": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_post_mortem": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_pulse": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_alert": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_simple": {
+								"workflow_id", "id",
+							},
+				},
+"rootly_workflow_task_create_sharepoint_page": {
 					
 							"rootly_workflow_incident": {
 								"workflow_id", "id",
@@ -1337,6 +1415,32 @@ func (p *RootlyProvider) GetResourceConnections() map[string]map[string][]string
 							},
 				},
 "rootly_workflow_task_create_zendesk_ticket": {
+					
+							"rootly_workflow_incident": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_action_item": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_post_mortem": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_pulse": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_alert": {
+								"workflow_id", "id",
+							},
+
+							"rootly_workflow_simple": {
+								"workflow_id", "id",
+							},
+				},
+"rootly_workflow_task_create_zendesk_jira_link": {
 					
 							"rootly_workflow_incident": {
 								"workflow_id", "id",
@@ -2836,6 +2940,12 @@ func (p *RootlyProvider) GetResourceConnections() map[string]map[string][]string
 								"incident_role_id", "id",
 							},
 				},
+    "rootly_override_shift": {
+					
+							"rootly_schedule": {
+								"schedule_id", "id",
+							},
+				},
     "rootly_playbook_task": {
 					
 							"rootly_playbook": {
@@ -2846,6 +2956,24 @@ func (p *RootlyProvider) GetResourceConnections() map[string]map[string][]string
 					
 							"rootly_retrospective_process": {
 								"retrospective_process_id", "id",
+							},
+				},
+    "rootly_schedule_rotation": {
+					
+							"rootly_schedule": {
+								"schedule_id", "id",
+							},
+				},
+    "rootly_schedule_rotation_active_day": {
+					
+							"rootly_schedule_rotation": {
+								"schedule_rotation_id", "id",
+							},
+				},
+    "rootly_schedule_rotation_user": {
+					
+							"rootly_schedule_rotation": {
+								"schedule_rotation_id", "id",
 							},
 				},
     "rootly_status_page_template": {
@@ -2882,6 +3010,7 @@ func (p *RootlyProvider) GetSupportedService() map[string]terraformutils.Service
 		"retrospective_configuration": &RetrospectiveConfigurationGenerator{},
 		"retrospective_process": &RetrospectiveProcessGenerator{},
 		"role": &RoleGenerator{},
+		"schedule": &ScheduleGenerator{},
 		"secret": &SecretGenerator{},
 		"service": &ServiceGenerator{},
 		"severity": &SeverityGenerator{},

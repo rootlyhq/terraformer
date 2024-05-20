@@ -13,8 +13,8 @@ package rootly
 import (
 	${childNames.includes("workflow_task") ? `"regexp"` : ''}
 	"github.com/GoogleCloudPlatform/terraformer/terraformutils"
-	"github.com/rootlyhq/terraform-provider-rootly/client"
-	rootlygo "github.com/rootlyhq/terraform-provider-rootly/schema"
+	"github.com/rootlyhq/terraform-provider-rootly/v2/client"
+	rootlygo "github.com/rootlyhq/terraform-provider-rootly/v2/schema"
 )
 
 type ${inflect.camelize(name)}Generator struct {

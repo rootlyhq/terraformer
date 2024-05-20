@@ -3,7 +3,7 @@ package rootly
 import (
 	"fmt"
 	"github.com/GoogleCloudPlatform/terraformer/terraformutils"
-	"github.com/rootlyhq/terraform-provider-rootly/client"
+	"github.com/rootlyhq/terraform-provider-rootly/v2/client"
 )
 
 type RootlyService struct { //nolint
