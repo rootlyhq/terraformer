@@ -47,6 +47,11 @@ func (g* FormFieldGenerator) InitResources() error {
         return err
       }
       g.Resources = append(g.Resources, child_form_field_option...)
+child_form_field_placement, err := g.createFormFieldPlacementResources(tf_resource.InstanceState.ID)
+      if err != nil {
+        return err
+      }
+      g.Resources = append(g.Resources, child_form_field_placement...)
 child_form_field_position, err := g.createFormFieldPositionResources(tf_resource.InstanceState.ID)
       if err != nil {
         return err
@@ -85,6 +90,16 @@ func (g *FormFieldGenerator) PostConvertHook() error {
             continue
           }
           if form_field_option.InstanceState.Attributes["form_field_id"] == resource.InstanceState.ID {
+            g.Resources[i].Item["form_field_id"] = "${" + resource.InstanceInfo.Type + "." + resource.ResourceName + ".id}"
+          }
+        }
+      
+
+        for i, form_field_placement := range g.Resources {
+          if form_field_placement.InstanceInfo.Type != "rootly_form_field_placement" {
+            continue
+          }
+          if form_field_placement.InstanceState.Attributes["form_field_id"] == resource.InstanceState.ID {
             g.Resources[i].Item["form_field_id"] = "${" + resource.InstanceInfo.Type + "." + resource.ResourceName + ".id}"
           }
         }
@@ -148,6 +163,55 @@ func (g *FormFieldGenerator) createFormFieldOptionResource(provider_resource int
 		x.ID,
 		x.ID,
 		"rootly_form_field_option",
+		g.ProviderName,
+		[]string{},
+	)
+}
+
+
+func (g *FormFieldGenerator) createFormFieldPlacementResources(parent_id string) ([]terraformutils.Resource, error) {
+	page_size := 50
+	page_num := 1
+
+	client, err := g.RootlyClient()
+	if err != nil {
+		return nil, err
+	}
+
+  var tf_resources []terraformutils.Resource
+
+	for {
+		resources, err := func(page_size, page_num int) ([]interface{}, error) {
+			params := new(rootlygo.ListFormFieldPlacementsParams)
+			params.PageSize = &page_size
+			params.PageNumber = &page_num
+			return client.ListFormFieldPlacements(parent_id, params)
+		}(page_size, page_num)
+
+		if err != nil {
+			return nil, err
+		}
+
+		if len(resources) == 0 {
+			break
+		}
+
+  	for _, resource := range resources {
+      tf_resources = append(tf_resources, g.createFormFieldPlacementResource(resource))
+  	}
+
+		page_num += 1
+	}
+
+	return tf_resources, nil
+}
+
+func (g *FormFieldGenerator) createFormFieldPlacementResource(provider_resource interface{}) terraformutils.Resource {
+	x, _ := provider_resource.(*client.FormFieldPlacement)
+	return terraformutils.NewSimpleResource(
+		x.ID,
+		x.ID,
+		"rootly_form_field_placement",
 		g.ProviderName,
 		[]string{},
 	)
