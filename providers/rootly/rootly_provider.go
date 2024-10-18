@@ -10,8 +10,8 @@ import (
 
 type RootlyProvider struct { //nolint
 	terraformutils.Provider
-	apiKey        string
 	apiUrl        string
+	apiKey        string
 }
 
 func (p *RootlyProvider) Init(args []string) error {
@@ -28,8 +28,8 @@ func (p *RootlyProvider) Init(args []string) error {
 	if apiKey := os.Getenv("ROOTLY_API_TOKEN"); apiKey != "" {
 		p.apiKey = os.Getenv("ROOTLY_API_TOKEN")
 	}
-	if args[0] != "" {
-		p.apiKey = args[0]
+	if args[1] != "" {
+		p.apiKey = args[1]
 	}
 	if p.apiKey == "" {
 		return errors.New("required API key missing")

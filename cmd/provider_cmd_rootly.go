@@ -8,6 +8,7 @@ import (
 )
 
 func newCmdRootlyImporter(options ImportOptions) *cobra.Command {
+	url := ""
 	token := ""
 	cmd := &cobra.Command{
 		Use:   "rootly",
@@ -15,7 +16,7 @@ func newCmdRootlyImporter(options ImportOptions) *cobra.Command {
 		Long:  "Import current state to Terraform configuration from Rootly",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			provider := newRootlyProvider()
-			err := Import(provider, options, []string{token})
+			err := Import(provider, options, []string{url, token})
 			if err != nil {
 				return err
 			}
@@ -25,6 +26,7 @@ func newCmdRootlyImporter(options ImportOptions) *cobra.Command {
 
 	cmd.AddCommand(listCmd(newRootlyProvider()))
 	baseProviderFlags(cmd.PersistentFlags(), &options, "environment", "")
+	cmd.PersistentFlags().StringVarP(&url, "url", "u", "https://api.rootly.com", "env param ROOTLY_API_URL")
 	cmd.PersistentFlags().StringVarP(&token, "token", "t", "", "env param ROOTLY_API_TOKEN")
 	return cmd
 }
