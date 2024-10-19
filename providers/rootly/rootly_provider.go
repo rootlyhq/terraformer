@@ -76,7 +76,13 @@ func (p RootlyProvider) GetProviderData(arg ...string) map[string]interface{} {
 
 func (p *RootlyProvider) GetResourceConnections() map[string]map[string][]string {
 	return map[string]map[string][]string{
-		"rootly_form_field_option": {
+		"rootly_dashboard_panel": {
+					
+							"rootly_dashboard": {
+								"dashboard_id", "id",
+							},
+				},
+    "rootly_form_field_option": {
 					
 							"rootly_form_field": {
 								"form_field_id", "id",
@@ -230,6 +236,18 @@ func (p *RootlyProvider) GetResourceConnections() map[string]map[string][]string
 								"retrospective_process_group_id", "id",
 							},
 				},
+    "rootly_escalation_level": {
+					
+							"rootly_escalation_policy": {
+								"escalation_policy_id", "id",
+							},
+				},
+    "rootly_escalation_path": {
+					
+							"rootly_escalation_policy": {
+								"escalation_policy_id", "id",
+							},
+				},
 	}
 }
 
@@ -238,6 +256,7 @@ func (p *RootlyProvider) GetSupportedService() map[string]terraformutils.Service
 		"authorization": &AuthorizationGenerator{},
 		"cause": &CauseGenerator{},
 		"custom_form": &CustomFormGenerator{},
+		"dashboard": &DashboardGenerator{},
 		"environment": &EnvironmentGenerator{},
 		"form_field": &FormFieldGenerator{},
 		"form_set": &FormSetGenerator{},

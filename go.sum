@@ -1547,6 +1547,8 @@ github.com/rootlyhq/terraform-provider-rootly/v2 v2.0.1 h1:OO59nGVQ+GpR91qkVrlRF
 github.com/rootlyhq/terraform-provider-rootly/v2 v2.0.1/go.mod h1:bPWdTKrQdK7eePffHIBwrLkl87xTSeuQ+fcHgZkPX4g=
 github.com/rootlyhq/terraform-provider-rootly/v2 v2.7.1 h1:AQUkPKMewoW06FSUhj3z9nthkdVO1DfV/ZrPbDIMWm8=
 github.com/rootlyhq/terraform-provider-rootly/v2 v2.7.1/go.mod h1:pQWEK6tR8wwHvzDOG/VHigJ0ZjbwlDoutfyFrkJX31w=
+github.com/rootlyhq/terraform-provider-rootly/v2 v2.8.0 h1:1Nz/32tk9DI1GqVlRdjhAOOGhCJhFoITdKTpPHdzloU=
+github.com/rootlyhq/terraform-provider-rootly/v2 v2.8.0/go.mod h1:pQWEK6tR8wwHvzDOG/VHigJ0ZjbwlDoutfyFrkJX31w=
 github.com/russellhaering/goxmldsig v1.2.0 h1:Y6GTTc9Un5hCxSzVz4UIWQ/zuVwDvzJk80guqzwx6Vg=
 github.com/russellhaering/goxmldsig v1.2.0/go.mod h1:gM4MDENBQf7M+V824SGfyIUVFWydB7n0KkEubVJl+Tw=
 github.com/russross/blackfriday/v2 v2.0.1/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=

@@ -4,6 +4,7 @@ const fs = require('fs')
 const providerTpl = require(path.join(__dirname, 'templates', 'provider.go.js'))
 const resourceTpl = require(path.join(__dirname, 'templates', 'resource.go.js'))
 const swaggerUrl = process.env.SWAGGER_URL || "https://rootly-heroku.s3.amazonaws.com/swagger/v1/swagger.tf.json"
+const cleanSwagger = require('./clean-swagger.js')
 
 const excluded = [
     "alert",
@@ -16,13 +17,9 @@ const excluded = [
     "catalog_entity_property",
     "custom_field_option",
     "custom_field",
-    "dashboard_panel",
-    "dashboard",
     "errors",
     "escalation_policy",
     "on_call_shadows",
-    "escalation_policy_path",
-    "escalation_policy_level",
     "live_call_router",
     "incident_status_page_event",
     "incident_action_item",
@@ -90,7 +87,7 @@ function getChildren(swagger, resources) {
 }
 
 function getSwagger() {
-  return fetch(swaggerUrl).then((res) => res.json())
+  return fetch(swaggerUrl).then((res) => res.json()).then(cleanSwagger)
 }
 
 function writeResource(swagger, name, childName) {
@@ -117,6 +114,9 @@ function collectionPathSchema(swagger, name) {
   return Object.keys(swagger.paths)
     .filter((url) => {
       const get = swagger.paths[url].get;
+      if (get?.operationId === "listEscalationLevelsPolicies" && `list${inflect.pluralize(inflect.camelize(name))}` === "listEscalationLevels") {
+        return true
+      }
       return (
         get &&
         get.operationId.replace(/ /g, "") ===

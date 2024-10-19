@@ -42,7 +42,11 @@ func (g* DashboardGenerator) InitResources() error {
   	for _, resource := range resources {
       tf_resource := g.createDashboardResource(resource)
       g.Resources = append(g.Resources, tf_resource)
-      
+      child_dashboard_panel, err := g.createDashboardPanelResources(tf_resource.InstanceState.ID)
+      if err != nil {
+        return err
+      }
+      g.Resources = append(g.Resources, child_dashboard_panel...)
   	}
 
 		page_num += 1
@@ -63,5 +67,74 @@ func (g *DashboardGenerator) createDashboardResource(provider_resource interface
 }
 
 
+func (g *DashboardGenerator) PostConvertHook() error {
+  for _, resource := range g.Resources {
+		
+    if resource.InstanceInfo.Type != "rootly_dashboard" {
+      continue
+    }
+		
+    
+        for i, dashboard_panel := range g.Resources {
+          if dashboard_panel.InstanceInfo.Type != "rootly_dashboard_panel" {
+            continue
+          }
+          if dashboard_panel.InstanceState.Attributes["dashboard_id"] == resource.InstanceState.ID {
+            g.Resources[i].Item["dashboard_id"] = "${" + resource.InstanceInfo.Type + "." + resource.ResourceName + ".id}"
+          }
+        }
+      
+  }
 
+  return nil
+}
+
+
+func (g *DashboardGenerator) createDashboardPanelResources(parent_id string) ([]terraformutils.Resource, error) {
+	page_size := 50
+	page_num := 1
+
+	client, err := g.RootlyClient()
+	if err != nil {
+		return nil, err
+	}
+
+  var tf_resources []terraformutils.Resource
+
+	for {
+		resources, err := func(page_size, page_num int) ([]interface{}, error) {
+			params := new(rootlygo.ListDashboardPanelsParams)
+			params.PageSize = &page_size
+			params.PageNumber = &page_num
+			return client.ListDashboardPanels(parent_id, params)
+		}(page_size, page_num)
+
+		if err != nil {
+			return nil, err
+		}
+
+		if len(resources) == 0 {
+			break
+		}
+
+  	for _, resource := range resources {
+      tf_resources = append(tf_resources, g.createDashboardPanelResource(resource))
+  	}
+
+		page_num += 1
+	}
+
+	return tf_resources, nil
+}
+
+func (g *DashboardGenerator) createDashboardPanelResource(provider_resource interface{}) terraformutils.Resource {
+	x, _ := provider_resource.(*client.DashboardPanel)
+	return terraformutils.NewSimpleResource(
+		x.ID,
+		x.ID,
+		"rootly_dashboard_panel",
+		g.ProviderName,
+		[]string{},
+	)
+}
 
