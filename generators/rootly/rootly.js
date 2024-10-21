@@ -42,8 +42,8 @@ const excluded = [
     "user",
     "user_notification_rule",
     "webhooks_delivery",
+    "workflow_custom_field_selection",
     "workflow_runs",
-    "workflow_task",
 ]
 
 async function main() {
