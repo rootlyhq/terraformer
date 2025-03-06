@@ -1,4 +1,6 @@
-# Rootly Terraformer
+# Rootly Terraformer (DEPRECATED)
+
+## ⚠️ Please use [Terraform import blocks](https://developer.hashicorp.com/terraform/language/import/generating-configuration) to generate configuration
 
 Generate Terraform configuration from Rootly's API. Terraform in reverse.
 
